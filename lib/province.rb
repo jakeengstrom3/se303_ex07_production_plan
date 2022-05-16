@@ -24,7 +24,7 @@ class Province
   end
 
   def shortfall
-    @demand - @total_production
+    @demand.to_i - @total_production
   end
 
   def profit
@@ -32,7 +32,7 @@ class Province
   end
 
   def demand_cost
-    remaining_demand = @demand
+    remaining_demand = @demand.to_i
     result = 0
     @producers.sort_by(&:cost).each do |p|
       contribution = [remaining_demand, p.production].min
@@ -47,7 +47,7 @@ class Province
   end
 
   def satisfied_demand
-    [@demand, @total_production].min
+    [@demand.to_i, @total_production].min
   end
 
 end
