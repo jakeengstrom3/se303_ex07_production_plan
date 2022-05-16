@@ -8,6 +8,13 @@ class ProvinceTest < Minitest::Test
 
   def setup
      @asia = Province.new(sample_province_data)
+     data = {
+      name: "No proudcers",
+      producers: [],
+      demand: 30,
+      price: 20
+    };
+    @no_producer_province = Province.new(data)
   end
 
   def test_province_shortfall
@@ -18,26 +25,23 @@ class ProvinceTest < Minitest::Test
     assert_equal(230, @asia.profit)
   end
 
-end
-
-class NoProducerProvinceTest < Minitest::Test
-
-  def setup
-    data = {
-      name: "No proudcers",
-      producers: [],
-      demand: 30,
-      price: 20
-    };
-    @no_producer_province = Province.new(data)
- end
-
-  def test_province_shortfall
+  def test_no_producer_province_shortfall
     assert_equal(30, @no_producer_province.shortfall)
   end
 
-  def test_province_profit
+  def test_no_producer_province_profit
     assert_equal(0, @no_producer_province.profit)
   end
 
+  def test_zero_demand
+    @asia.demand = 0;
+    assert_equal(@asia.profit, 0)
+    assert_equal(@asia.shortfall, -25)
+  end
+
+  def test_negative_demand
+    @asia.demand = -1;
+    assert_equal(@asia.profit, -10)
+    assert_equal(@asia.shortfall, -26)
+  end
 end
